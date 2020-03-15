@@ -41,8 +41,6 @@ public class InterruptableTimerMqttExample {
         }
         
         //Create an InterruptableTimerMqtt task
-        //MqttMessage StartMsg = new MqttMessage("start".getBytes());
-        //MqttMessage StopMsg = new MqttMessage("stop".getBytes());
         InterruptableTimerMqtt itm = new InterruptableTimerMqtt(
                 "test task", 
                 4000, 
@@ -54,6 +52,7 @@ public class InterruptableTimerMqttExample {
         
         //Start
         itm.start();
+        //mosquitto_sub -h 192.168.1.46 -p 1885 -t home/test/#
         
     }
     
