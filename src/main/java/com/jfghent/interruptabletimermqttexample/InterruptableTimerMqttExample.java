@@ -31,6 +31,7 @@ public class InterruptableTimerMqttExample {
             mc = new MqttClient("tcp://192.168.1.46:1885", "InterruptableTimerMqttExample");
             MqttConnectOptions options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);
+            options.setCleanSession(true);
             
             mc.connect(options);
             String payload = "this is the payload";
@@ -44,7 +45,7 @@ public class InterruptableTimerMqttExample {
         //MqttMessage StopMsg = new MqttMessage("stop".getBytes());
         InterruptableTimerMqtt itm = new InterruptableTimerMqtt(
                 "test task", 
-                4, 
+                4000, 
                 mc, 
                 "home/test/start", 
                 "home/test/stop", 
