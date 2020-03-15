@@ -40,11 +40,11 @@ public class InterruptableTimerMqttExample {
         }
         
         //Create an InterruptableTimerMqtt task
-        MqttMessage StartMsg = new MqttMessage("start".getBytes());
-        MqttMessage StopMsg = new MqttMessage("stop".getBytes());
+        //MqttMessage StartMsg = new MqttMessage("start".getBytes());
+        //MqttMessage StopMsg = new MqttMessage("stop".getBytes());
         InterruptableTimerMqtt itm = new InterruptableTimerMqtt(
                 "test task", 
-                0, 
+                4, 
                 mc, 
                 "home/test/start", 
                 "home/test/stop", 
@@ -52,6 +52,8 @@ public class InterruptableTimerMqttExample {
                 new MqttMessage("stop".getBytes()));
         
         //Start
+        itm.start();
+        
     }
     
 }
