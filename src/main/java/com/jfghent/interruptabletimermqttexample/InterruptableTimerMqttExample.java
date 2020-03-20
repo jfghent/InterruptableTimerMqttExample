@@ -6,6 +6,7 @@
 package com.jfghent.interruptabletimermqttexample;
 
 //import com.jfghent.interruptabletimermqtt.InterruptableTimerMqtt;
+import com.jfghent.interruptabletasksequence.InterruptableTaskSequence;
 import com.jfghent.interruptabletimer.InterfaceVoid;
 import com.jfghent.interruptabletimermqtt.InterruptableTimerMqtt;
 import java.util.HashSet;
@@ -23,8 +24,11 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  * @author jon
  */
 public class InterruptableTimerMqttExample {
+    static InterruptableTaskSequence seq = null;
+    
     static MqttClient mc = null;
     static InterruptableTimerMqtt itm = null;
+    
     static MqttCallback mcb = new MqttCallback() {
             @Override
             public void connectionLost(Throwable cause) {
@@ -148,8 +152,28 @@ public class InterruptableTimerMqttExample {
         if(mc.isConnected())
         {
             //Create an InterruptableTimerMqtt task
-            itm = new InterruptableTimerMqtt(
-                    "test task",
+//            itm = new InterruptableTimerMqtt(
+//                    "test task 1",
+//                    8000, 
+//                    () -> {
+//                        System.exit(0);
+//                    },
+//                    mc,
+//                    "home/test/start",
+//                    "home/test/stop",
+//                    new MqttMessage("start1".getBytes()),//StartMsg, 
+//                    new MqttMessage("stop1".getBytes()));
+//
+//            //Start
+//            itm.start();
+//                //t1.start();
+//                //while(true);
+//                //mosquitto_sub -h 192.168.1.46 -p 1885 -t home/test/#
+//                //mc.publish("/home/test/topic", "exiting main".getBytes(), 0, false);
+            seq = new InterruptableTaskSequence( ()-> { System.exit(0);});
+            
+            seq.add(new InterruptableTimerMqtt(
+                    "test task 1",
                     8000, 
                     () -> {
                         System.exit(0);
@@ -157,15 +181,21 @@ public class InterruptableTimerMqttExample {
                     mc,
                     "home/test/start",
                     "home/test/stop",
-                    new MqttMessage("start".getBytes()),//StartMsg, 
-                    new MqttMessage("stop".getBytes()));
-
-            //Start
-            itm.start();
-                //t1.start();
-                //while(true);
-                //mosquitto_sub -h 192.168.1.46 -p 1885 -t home/test/#
-                //mc.publish("/home/test/topic", "exiting main".getBytes(), 0, false);
+                    new MqttMessage("start1".getBytes()),//StartMsg, 
+                    new MqttMessage("stop1".getBytes())));
+                    
+            seq.add(new InterruptableTimerMqtt(
+                    "test task 2",
+                    3000, 
+                    () -> {
+                        System.exit(0);
+                    },
+                    mc,
+                    "home/test/start",
+                    "home/test/stop",
+                    new MqttMessage("start2".getBytes()),//StartMsg, 
+                    new MqttMessage("stop2".getBytes())));
+                    
             System.out.println("Exiting Main");
             
             
