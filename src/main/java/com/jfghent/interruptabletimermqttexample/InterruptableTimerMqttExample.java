@@ -59,10 +59,10 @@ public class InterruptableTimerMqttExample {
                    
                     if(topic.equals("home/test/cnx"))
                     {
-                        itm.cancel();
+                        seq.cancel();
                     }
                     else if (topic.equals("home/test/elapsed")){
-                        Long elap = itm.GetElapsed();
+                        Long elap = seq.GetRemaining(); //seq.GetElapsed();
                         System.out.println("elapsed time: " + elap.toString());
                         mc.publish("home/test/time", 
                                 elap.toString().getBytes(),
@@ -176,7 +176,7 @@ public class InterruptableTimerMqttExample {
                     "test task 1",
                     8000, 
                     () -> {
-                        System.exit(0);
+                        seq.runNextTask();
                     },
                     mc,
                     "home/test/start",
@@ -188,14 +188,16 @@ public class InterruptableTimerMqttExample {
                     "test task 2",
                     3000, 
                     () -> {
-                        System.exit(0);
+                        seq.runNextTask();
                     },
                     mc,
                     "home/test/start",
                     "home/test/stop",
                     new MqttMessage("start2".getBytes()),//StartMsg, 
                     new MqttMessage("stop2".getBytes())));
-                    
+            
+            seq.run();
+            
             System.out.println("Exiting Main");
             
             
