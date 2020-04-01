@@ -7,9 +7,7 @@ package com.jfghent.interruptabletimermqttexample;
 
 //import com.jfghent.interruptabletimermqtt.InterruptableTimerMqtt;
 import com.jfghent.interruptabletasksequence.InterruptableTaskSequence;
-import com.jfghent.interruptabletimer.InterfaceVoid;
 import com.jfghent.interruptabletimermqtt.InterruptableTimerMqtt;
-import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -63,7 +61,6 @@ public class InterruptableTimerMqttExample {
 
             @Override
             public void deliveryComplete(IMqttDeliveryToken token) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 System.out.println("Delivery Complete");
             }
         };
@@ -73,52 +70,7 @@ public class InterruptableTimerMqttExample {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//        Thread t1 = new Thread(itm);
-//        mcb = new MqttCallback() {
-//            @Override
-//            public void connectionLost(Throwable cause) {
-//                System.out.println("Connection Lost");
-//                try {
-//                    if(mc!=null) mc.connect();
-//                } catch (MqttException ex) {
-//                    Logger.getLogger(InterruptableTimerMqttExample.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//
-//            @Override
-//            public void messageArrived(String topic, MqttMessage message) throws Exception {
-//                String msg = new String(message.getPayload());
-//                System.out.println("Message received: " + msg);
-////                if("stopit".equals(msg))
-////                {
-////                    System.out.println("Cancelling...");
-////                    if(itm != null)
-////                    { 
-////                        itm.cancel();
-////                    }    
-////                }else if ("howlong".equals(msg))
-////                {
-//                    System.out.println("Elapsed Time");
-//                    if(itm != null)
-//                    { 
-//                        Long elap = itm.GetElapsed();
-//                        System.out.println("elapsed time: " + elap.toString());
-//                        mc.publish("home/test/time", 
-//                                elap.toString().getBytes(),
-//                                0,
-//                                false);
-//                    }
-////                }
-//                
-//            }
-//
-//            @Override
-//            public void deliveryComplete(IMqttDeliveryToken token) {
-//                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//                System.out.println("Delivery Complete");
-//            }
-//        };
-             
+       
         try {
             //Create a simple MQTT Client
             mc = new MqttClient("tcp://localhost","InterruptableTimerMqttExample"); //("tcp://192.168.1.46:1885", "InterruptableTimerMqttExample");
@@ -174,6 +126,4 @@ public class InterruptableTimerMqttExample {
             System.out.println("Error: MqttClient not connected.");
         }
     }
-    
-    
 }
