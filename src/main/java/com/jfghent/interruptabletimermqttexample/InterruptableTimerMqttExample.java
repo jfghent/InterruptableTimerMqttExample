@@ -44,33 +44,21 @@ public class InterruptableTimerMqttExample {
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 String msg = new String(message.getPayload());
                 System.out.println("Message received: " + msg);
-//                if("stopit".equals(msg))
-//                {
-//                    System.out.println("Cancelling...");
-//                    if(itm != null)
-//                    { 
-//                        itm.cancel();
-//                    }    
-//                }else if ("howlong".equals(msg))
-//                {
+
                     System.out.println("Elapsed Time");
-                    //if(itm != null)
-                    //{ 
-                   
+
                     if(topic.equals("home/test/cnx"))
                     {
                         seq.cancel();
                     }
                     else if (topic.equals("home/test/elapsed")){
-                        Long elap = seq.GetRemaining(); //seq.GetElapsed();
+                        Long elap = seq.GetRemaining(); 
                         System.out.println("elapsed time: " + elap.toString());
                         mc.publish("home/test/time", 
                                 elap.toString().getBytes(),
                                 2,
                                 false);
                     }
-//                }
-                
             }
 
             @Override
@@ -151,25 +139,6 @@ public class InterruptableTimerMqttExample {
         
         if(mc.isConnected())
         {
-            //Create an InterruptableTimerMqtt task
-//            itm = new InterruptableTimerMqtt(
-//                    "test task 1",
-//                    8000, 
-//                    () -> {
-//                        System.exit(0);
-//                    },
-//                    mc,
-//                    "home/test/start",
-//                    "home/test/stop",
-//                    new MqttMessage("start1".getBytes()),//StartMsg, 
-//                    new MqttMessage("stop1".getBytes()));
-//
-//            //Start
-//            itm.start();
-//                //t1.start();
-//                //while(true);
-//                //mosquitto_sub -h 192.168.1.46 -p 1885 -t home/test/#
-//                //mc.publish("/home/test/topic", "exiting main".getBytes(), 0, false);
             seq = new InterruptableTaskSequence( ()-> { System.exit(0);});
             
             seq.add(new InterruptableTimerMqtt(
