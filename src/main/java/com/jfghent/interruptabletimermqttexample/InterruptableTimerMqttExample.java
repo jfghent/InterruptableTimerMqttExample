@@ -5,7 +5,6 @@
  */
 package com.jfghent.interruptabletimermqttexample;
 
-//import com.jfghent.interruptabletimermqtt.InterruptableTimerMqtt;
 import com.jfghent.interruptabletasksequence.InterruptableTaskSequence;
 import com.jfghent.interruptabletimermqtt.InterruptableTimerMqtt;
 import java.util.logging.Level;
